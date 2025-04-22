@@ -10,8 +10,10 @@ import Swal from 'sweetalert2';
 function App() {
 
   const [loading, setLoading] = useState(false);
+  const [loadingDocs, setLoadingDocs] = useState(false);
   const [adminNumber, setAdmin] = useState("");
-  const [studentInfo, setStudentInfo] = useState({image:"", name:"", course:"", date:"", class:"",credit:""});
+  const [password, setPassword] = useState("");
+  const [studentInfo, setStudentInfo] = useState({image:"", name:"", admin:"", course:"", date:"", class:"",credit:""});
   const [checked, setChecked] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
 
@@ -47,6 +49,39 @@ function App() {
       })
 
     setLoading(false);
+  }
+  const downloadDocs = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoadingDocs(true);
+    if(!password){
+      setLoadingDocs(false);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please enter password!',
+      })
+      return
+    }
+    const allow = database.find(({restrict,admin}) => restrict === password && adminNumber === admin)
+    console.log(allow,"password")
+    if(!allow){
+      setLoadingDocs(false);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Wrong password!',
+      })
+      return
+    }
+    ['certificates','transcripts'].map(value => {
+      const link = document.createElement('a');
+      link.href = `./${value}/${studentInfo?.admin}.pdf`;
+      link.setAttribute('download', `./${value}/${studentInfo?.admin}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+    })
+
+    setLoadingDocs(false);
   }
   const settings = {
     // dots: true,
@@ -153,7 +188,7 @@ function App() {
           </article>
         </div>
       </div>
-      <div className={windowWidth > 800 ? 'w-[100%] h-[70%] bg-[#FDF8F2]' : 'w-[100%] h-[auto] bg-[#FDF8F2]' }>
+      <div className={windowWidth > 800 ? 'w-[100%] h-[auto%] bg-[#FDF8F2]' : 'w-[100%] h-[auto] bg-[#FDF8F2]' }>
         <h1 style={{textAlign:"center",fontSize:"180%"}}>CHECK CERTIFICATION CREDIBILITY</h1>
         <div className={windowWidth > 800 ? 'w-[100%] h-[100%] flex flex-row flex-wrap justify-center items-center' : 'w-[100%] h-[auto]'}>
           <div className={windowWidth > 800 ? 'w-[38%] h-[100%] m-[1%]':'w-[98%] h-[100%] m-[1%]'}>
@@ -170,6 +205,7 @@ function App() {
                 required/>
                 <button 
                 type="submit"
+                disabled={loading}
                 className="w-[50%] h-[10%] bg-[#000] text-[#fff] rounded-md p-[1%] my-[2%]"
                 >
                   {loading ? "checking..." : "check"}
@@ -177,7 +213,7 @@ function App() {
 
             </form>
           </div>
-          <div className={windowWidth > 800 ? 'w-[58%] h-[100%] m-[1%] items-center flex flex-col justify-center':'w-[98%] h-[100%] m-[1%] items-center flex flex-col justify-center'}>
+          <div className={windowWidth > 800 ? 'w-[58%] h-[auto] m-[1%] items-center flex flex-col justify-center':'w-[98%] h-[100%] m-[1%] items-center flex flex-col justify-center'}>
             {
               checked ? (
                 <>
@@ -207,6 +243,30 @@ function App() {
                     <p className='text-[100%]'>{studentInfo?.credit}</p>
                   </div>
 
+                </div>
+                <div className={windowWidth > 800 ? 'w-[100%] h-[100%] flex flex-row flex-wrap' : 'w-[100%] h-[auto] flex flex-row flex-wrap'}>
+                  {
+                    <form
+                      onSubmit={(e) => downloadDocs(e)}
+                      className="w-[80%] mx-[10%] h-[100%] flex flex-col justify-center items-center"
+                    >
+                    <p>Input password to download academic documents</p>
+                    <input 
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="password"
+                      type="password"
+                      className="w-[50%] h-[10%] border-2 border-[#000] rounded-md p-[1%] my-[2%]"
+                      required/>
+                      <button 
+                      type="submit"
+                      disabled={loadingDocs}
+                      className="w-[50%] h-[10%] bg-[#000] text-[#fff] rounded-md p-[1%] my-[2%]"
+                      >
+                        {loadingDocs ? "downloading..." : "Download"}
+                      </button>
+      
+                  </form>
+                  }
                 </div>
                 </>
               ) : (
