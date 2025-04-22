@@ -73,7 +73,7 @@ function App() {
       })
       return
     }
-    ['certificates','transcripts'].map(value => {
+    ['certificates','transcripts'].forEach(value => {
       const link = document.createElement('a');
       link.href = `./${value}/${studentInfo?.admin}.pdf`;
       link.setAttribute('download', `./${value}/${studentInfo?.admin}.pdf`);
