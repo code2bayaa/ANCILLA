@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
+
+body {
+  margin: 0;
+  font-family: "EB Garamond", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  height:100%;
+  width:100%;
+}
+html {
+  height:100%;
+  width:100%;
+}
+
+#root{
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+.slick-slide{
+  margin:0.2%;
+}
+
+.slick-track{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
