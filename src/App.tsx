@@ -155,7 +155,7 @@ function App() {
           <p>P.O BOX 12395 – 80117 MTOPANGA – MOMBASA</p>
         </div>
       </div>
-      <div className={windowWidth > 800 ? 'w-[100%] h-[80%] bg-[#000]' : 'w-[100%] h-[100%] bg-[#000]'}>
+      <div className={windowWidth > 800 ? 'w-[100%] h-[80%] bg-gradient-to-b from-[#003366] via-[#3b71b9] to-[#dce8f2]' : 'w-[100%] h-[100%] bg-gradient-to-b from-[#003366] via-[#3b71b9] to-[#dce8f2]'}>
         <h1 style={{textAlign:"center",color:"#fff",fontSize:windowWidth > 800 ? "300%" : "180%",textDecoration:"underline"}}>ANCILLA VOCATIONAL TRAINING COLLEGE</h1>
       
         <div className='w-[100%] h-[60%]'>
@@ -163,8 +163,8 @@ function App() {
             {
                 slider.map(({image},index) => 
                 (
-                    <div className="w-[24%] m-[0.5%] shadow-xl" key={index}>
-                        <img src={image} alt="https://late-developers.com" height={400} width={400} style={{backgroundImage:"linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.45),rgba(0,0,0,0.42))"}} className={windowWidth > 800 ? "h-[500px] w-[100%] shadow-xl" : "h-[300px] w-[100%] shadow-xl"}/>
+                    <div className="w-[24%] shadow-xl" key={index}>
+                        <img src={image} alt="https://late-developers.com" height={400} width={400} className={windowWidth > 800 ? "h-[500px] w-[100%] grayscale-0 hover:grayscale transition duration-300 shadow-xl" : "h-[300px] w-[100%] shadow-xl"}/>
                     </div>
                 )
                 )
